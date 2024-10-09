@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Scraper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        #quote {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: #fff;
+            max-width: 600px;
+            margin: auto;
+            border-radius: 8px;
+            text-align: center;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: black;
+            border: 1px solid rgb(78, 78, 248);
+            border-radius: 5px;
+            transition: 0.3s background-color, 0.5s transform;
+            background-color: rgb(78, 78, 248);
+            color: white;
+    
+        }
+        button:hover{
+            background-color: rgb(49, 49, 248);
+        }
+        button:active{
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Quote Generator</h1>
+    <button id="quoteButton" onclick="getQuote()">Get a Quote</button>
+    <div id="quote"></div>
+
+    <script>
+        async function getQuote(){
+            const quoteButton = document.getElementById('quoteButton')
+            const quote = document.getElementById('quote')
+            const apiUrl = 'https://api.quotable.io/random'
+
+            try{
+                const response = await fetch(apiUrl);
+                if(!response.ok){
+                    throw new Error('An error has being detected')
+                }
+                var data = await response.json()
+                console.log(data)
+                displayQuote(data)
+            } catch(error){
+                console.error(error)
+            }
+        }
+
+         function displayQuote(data){
+                quote.innerHTML = `<h3> ${data.content} </h3> <p>- ${data.author}</p>`
+        }
+    </script>
+</body>
+</html>
